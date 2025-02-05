@@ -7,7 +7,9 @@
         public DateTime? DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
 
-        public Relatorios(string tipo, DateTime dataInicio, DateTime dataFim) 
+        public Relatorios() { } // Construtor sem parâmetros (essencial)
+
+        public Relatorios(string tipo, DateTime dataInicio, DateTime dataFim)
         {
             Tipo = tipo;
             DataInicio = dataInicio;

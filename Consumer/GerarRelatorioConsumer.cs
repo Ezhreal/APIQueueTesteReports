@@ -12,14 +12,22 @@ namespace APIQueueTesteReports.Consumer
         // for recebida na fila. O MassTransit irá chamar este método automaticamente.
         // O parâmetro context contém informações sobre a mensagem, como a própria mensagem,
         // metadados, etc.
-        public Task Consume(ConsumeContext<GeraRelatorio> context)
+        public async Task Consume(ConsumeContext<GeraRelatorio> context)
         {
-            var message = context.Message;
+            try
+            {
+                var message = context.Message;
 
-            Console.WriteLine($"Relatório {message.Dados.Tipo} gerado (ID: {message.Id})");
-            Console.WriteLine($"Período: {message.Dados.DataInicio} - {message.Dados.DataFim}");
+                Console.WriteLine($"Relatório {message.Dados.Tipo} gerado (ID: {message.Id})");
+                Console.WriteLine($"Período: {message.Dados.DataInicio} - {message.Dados.DataFim}");
 
-            return Task.CompletedTask;
+                // Lógica para gerar o relatório...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao consumir mensagem: {ex.Message}");
+                // Outras ações de tratamento de erro, como log ou retry...
+            }
         }
     }
 }

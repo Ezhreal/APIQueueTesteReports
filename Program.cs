@@ -19,7 +19,7 @@ builder.Services.AddMassTransit(x =>
     x.AddConsumer<GerarRelatorioConsumer>();
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("localhost", "/", h =>
+        cfg.Host(new Uri("amqp://localhost:5672"), h =>
         {
             h.Username("guest");
             h.Password("guest");
@@ -35,8 +35,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
+
+app.Run();
